@@ -58,7 +58,7 @@ pip install protobuf --upgrade
 pip uninstall protobuf
 ```
 
-4. Install the version of the `protobuf` that is compatible with your `tensorflow`. To do this, run the following command:
+4. Install a version of `protobuf` that is compatible with `tensorflow` (e.g. 3.19.6). To do this, run the following command:
 
 ```
 pip install protobuf==[version-number]
