@@ -38,17 +38,19 @@ These libraries need to be installed before running the `gesture_recognition_mod
 
 ## Troubleshooting
 
-If you encounter the `ImportError: cannot import name 'builder' from 'google.protobuf.internal error'`, it is likely because your `tensorflow` requires an older version of the `protobuf` that does not include the `builder.py` script, but your `mediapipe` requires a newer version of the `protobuf` library that includes this script.
+If you encounter the `ImportError: cannot import name 'builder' from 'google.protobuf.internal error'`, it is likely because your `tensorflow` requires an older version of `protobuf` that does not include the `builder.py` script, but your `mediapipe` requires a newer version of `protobuf` that includes this script.
 
 To resolve this issue, you can try the following method:
 
-1. Install the latest version of the protobuf library that includes the builder.py script. To do this, run the following command:
+Adapted from [this Stack Overflow answer](https://stackoverflow.com/questions/71759248/importerror-cannot-import-name-builder-from-google-protobuf-internal)
+
+1. Install the latest version of the `protobuf` that includes the `builder.py` script. To do this, run the following command:
 
 ```
 pip install protobuf --upgrade
 ```
 
-2. Copy builder.py from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
+2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
 
 3. Uninstall the latest version of `protobuf`. To do this, run the following command:
 
@@ -62,7 +64,7 @@ pip uninstall protobuf
 pip install protobuf==[version-number]
 ```
 
-Replace `[version-number]` with the version number of the `protobuf` that is compatible with your `tensorflow`.
+&emsp;Replace `[version-number]` with the version number of `protobuf` that is compatible with your `tensorflow`.
 
 5. Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
 
