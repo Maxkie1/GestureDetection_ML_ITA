@@ -27,11 +27,12 @@ The project requires the following libraries:
 - `mediapipe`
 - `tensorflow`
 - `opencv-python`
+- `matplotlib`
 
 To install these libraries, run the following commands:
 
 ```
-pip install mediapipe tensorflow opencv-python
+pip install mediapipe tensorflow opencv-python matplotlib
 ```
 
 These libraries need to be installed before running the `gesture_recognition_model.py` and `main.py` scripts.
