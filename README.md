@@ -64,8 +64,6 @@ pip uninstall protobuf
 pip install protobuf==[version-number]
 ```
 
-&emsp;Replace `[version-number]` with the version number of `protobuf` that is compatible with your `tensorflow`.
-
 5. Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
 
 6. Run your code
