@@ -1,5 +1,7 @@
 """
-This script preprocesses the hand landmarks detected in a static image using MediaPipe Hands. The landmarks are converted to relative coordinates which are normalized and flattened. The resulting coordinates can be used as input for the hand gesture recognition model.
+This script preprocesses the hand landmarks detected in a static image using MediaPipe Hands. 
+The landmarks are converted to relative coordinates which are normalized and flattened. 
+The resulting coordinates can be used as input for the hand gesture recognition model.
 """
 
 # Import the necessary modules

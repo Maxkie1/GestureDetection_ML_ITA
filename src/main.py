@@ -1,12 +1,7 @@
 """
 Uses a trained model to classify the gestures performed by the detected hands in a video stream.
-
-To use the model, run the script as follows:
-    python main.py
-
 The video stream from the default webcam will be displayed, and the gestures performed by the detected hands
 will be classified and displayed on the video.
-
 The script assumes that the trained model is saved in a file named gesture_recognition_model.h5.
 """
 
