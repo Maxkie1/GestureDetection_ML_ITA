@@ -1,4 +1,5 @@
-"""Uses a trained model to classify the gestures performed by the detected hands in a video stream.
+"""
+Uses a trained model to classify the gestures performed by the detected hands in a video stream.
 
 To use the model, run the script as follows:
     python main.py
@@ -71,7 +72,7 @@ with mp_hands.Hands(
         # Check for user input to exit the program
         if cv2.waitKey(5) & 0xFF == 27:
             break
-              
+
 # Release the capture and destroy the display window
 cap.release()
 cv2.destroyAllWindows()
