@@ -28,14 +28,15 @@ The project requires the following libraries:
 - `tensorflow`
 - `opencv-python`
 - `matplotlib`
+- `numpy`
+- `h5py`
+- `scikit-learn`
 
-To install these libraries, run the following commands:
+To install these libraries, run the following command:
 
 ```
-pip install mediapipe tensorflow opencv-python matplotlib
+pip install mediapipe tensorflow opencv-python matplotlib numpy h5py scikit-learn
 ```
-
-These libraries need to be installed before running the `gesture_recognition_model.py` and `main.py` scripts.
 
 ## Troubleshooting
 
