@@ -41,7 +41,8 @@ print('y_train shape:', y_train.shape)
 # Close the HDF5 file
 h5_file.close()
 
-# Split to test and train
+# Split to test and train (for early development testing)
+# For final model, use separate test set
 x_train, x_test, y_train, y_test = model_selection.train_test_split(x_train, y_train, test_size=0.2, stratify=y_train)
 
 # Shift the labels so that they start at 0
