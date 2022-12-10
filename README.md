@@ -32,9 +32,17 @@ The project requires the following libraries:
 - `h5py`
 - `scikit-learn`
 
-To install these libraries, run the following command:
+To install these libraries globally, run the following command (unrecommended):
 
 ```
+pip install -r requirements.txt
+```
+
+To install these libraries in a conda environment, run the following command (recommended):
+
+```
+conda create --name thisproject
+conda activate thisproject 
 pip install -r requirements.txt
 ```
 
