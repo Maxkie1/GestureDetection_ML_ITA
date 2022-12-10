@@ -35,7 +35,7 @@ The project requires the following libraries:
 To install these libraries, run the following command:
 
 ```
-pip install mediapipe tensorflow opencv-python matplotlib numpy h5py scikit-learn
+pip install -r requirements.txt
 ```
 
 ## Troubleshooting
