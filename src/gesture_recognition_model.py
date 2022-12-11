@@ -56,11 +56,7 @@ training_h5_path = '../data/train/training_data.h5'
 test_h5_path = '../data/test/test_data.h5'
 # Load the data
 x_train, y_train = load_data(training_h5_path)
-#x_test, y_test = load_data(test_h5_path)
-
-# Split to test and train (for early development testing)
-# For final model, use separate test set
-x_train, x_test, y_train, y_test = model_selection.train_test_split(x_train, y_train, test_size=0.2, stratify=y_train)
+x_test, y_test = load_data(test_h5_path)
 
 # Shift the labels so that they start at 0
 y_train -= 1
