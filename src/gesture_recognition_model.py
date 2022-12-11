@@ -37,12 +37,15 @@ def load_data(h5_path):
 
     # Convert the labels to NumPy arrays
     y = np.array(y)
+
     # Print the shape of the data and labels
     print('x shape:', x.shape)
     print('y shape:', y.shape)
+
     # Close the HDF5 file
     h5_file.close()
 
+    # Return the data and labels
     return x, y
 
 # Define the paths to the training and test HDF5 files
