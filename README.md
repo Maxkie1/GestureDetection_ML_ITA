@@ -30,7 +30,7 @@ The project requires the following libraries:
 - `matplotlib`
 - `numpy`
 - `h5py`
-- `scikit-learn`
+- `scikit-optimize`
 
 To install these libraries globally, run the following command (unrecommended):
 

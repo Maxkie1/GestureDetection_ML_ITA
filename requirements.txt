@@ -4,4 +4,4 @@ opencv-python
 matplotlib
 numpy
 h5py
-scikit-learn
+scikit-optimize
