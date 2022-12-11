@@ -62,6 +62,12 @@ x_test, y_test = load_data(test_h5_path)
 # Shift the labels so that they start at 0
 y_train -= 1
 y_test -= 1
+# Shuffle training data and labels
+indices = np.arange(x_train.shape[0])
+np.random.seed(42)
+np.random.shuffle(indices)
+x_train = x_train[indices]
+y_train = y_train[indices]
 # One-hot encode the labels
 y_train = tf.keras.utils.to_categorical(y_train, num_classes=10)
 y_test = tf.keras.utils.to_categorical(y_test, num_classes=10)
@@ -97,11 +103,11 @@ wrapped_model = KerasClassifier(model=model, verbose=1)
 bayes_search = BayesSearchCV(
     wrapped_model,
     param_distributions,
-    n_iter=10,
+    n_iter=2,
     scoring="accuracy",
-    cv=4,
-    n_jobs=-1,
+    cv=3,
     random_state=42,
+    n_jobs=-1,
     return_train_score=True,
     verbose=1,
 )
@@ -109,7 +115,8 @@ bayes_search = BayesSearchCV(
 # Fit the model to the training data
 bayes_search.fit(x_train, y_train)
 
-# Print the test accuracy, train accuracy, and best hyperparameters
+# Print the train, validation, test accuracies and best hyperparameters
+print("Train accuracy:", bayes_search.cv_results_["mean_train_score"][bayes_search.best_index_])
 print("Validation accuracy:", bayes_search.best_score_)
 print("Test accuracy:", bayes_search.score(x_test, y_test))
 print("Best hyperparameters:", bayes_search.best_params_)

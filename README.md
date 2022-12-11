@@ -1,6 +1,6 @@
 # GestureDetection_ML_ITA
 
-This project uses a convolutional neural network to recognize gestures from images of hands in a live video feed. The recognized gestures are used to play a simple game.
+This project uses a neural network to recognize gestures from hands in a live video feed. The recognized gestures are used to play a simple game.
 
 ## Usage
 
