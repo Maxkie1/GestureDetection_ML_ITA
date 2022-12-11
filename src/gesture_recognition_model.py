@@ -5,9 +5,10 @@ The trained model will be saved to a file named gesture_recognition_model.h5.
 
 # Import the necessary libraries
 import tensorflow as tf
+from scikeras.wrappers import KerasClassifier
 import h5py
 import numpy as np
-from sklearn import model_selection 
+from skopt import BayesSearchCV
 
 # Print the docstring
 print(__doc__)
@@ -68,6 +69,12 @@ y_test = tf.keras.utils.to_categorical(y_test, num_classes=10)
 print('one-hot y_train shape:', y_train.shape)
 print('one-hot y_test shape:', y_test.shape)
 
+# Define the hyperparameter search space
+param_distributions = {
+    "batch_size": [16, 32, 64, 128],
+    "epochs": [20, 40, 60, 80, 100],
+}
+
 # Define the model's architecture
 model = tf.keras.Sequential([
     tf.keras.layers.Input(shape=(42,)),
@@ -83,16 +90,28 @@ model.summary()
 # Compile the model with the Adam optimizer and the categorical cross-entropy loss
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-# Train the model on the training set
-model.fit(x_train, y_train, batch_size=16, epochs=40)
+# Wrap the model in a KerasClassifier
+wrapped_model = KerasClassifier(model=model, verbose=1)
 
-# Evaluate the model on the test set
-test_loss, test_acc = model.evaluate(x_test, y_test)
+# Define the Bayesian optimization search object
+bayes_search = BayesSearchCV(
+    wrapped_model,
+    param_distributions,
+    n_iter=1,
+    scoring="accuracy",
+    cv=3,
+    random_state=42,
+    return_train_score=True,
+    verbose=1,
+)
 
-# Print the test accuracy
-print("Test accuracy:", test_acc)
-# Print the test loss
-print("Test loss:", test_loss)
+# Fit the model to the training data
+bayes_search.fit(x_train, y_train)
 
-# Save the trained model
-model.save("../models/gesture_recognition_model.h5")
+# Print the test accuracy, train accuracy, and best hyperparameters
+print("Validation accuracy:", bayes_search.best_score_)
+print("Test accuracy:", bayes_search.score(x_test, y_test))
+print("Best hyperparameters:", bayes_search.best_params_)
+
+# Save the model to a HDF5 file
+bayes_search.best_estimator_.model.save("../models/gesture_recognition_model.h5")
