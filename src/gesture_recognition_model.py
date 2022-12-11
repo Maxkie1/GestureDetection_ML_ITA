@@ -1,5 +1,5 @@
 """
-Trains a convolutional neural network to recognize gestures from images of hands.
+Trains a neural network to recognize gestures from images of hands.
 The trained model will be saved to a file named gesture_recognition_model.h5.
 """
 
@@ -12,34 +12,45 @@ from sklearn import model_selection
 # Print the docstring
 print(__doc__)
 
-# Open the HDF5 file
-h5_file = h5py.File("../data/train/hand_landmarks.h5", "r")
+# Load the data from a HDF5 file
+def load_data(h5_path):
+    # Open the HDF5 file
+    h5_file = h5py.File(h5_path, "r")
 
-# Create empty lists to store the data and labels
-x_train = np.empty((0, 42))
-y_train = []
+    # Initialize the data and labels
+    x = np.empty((0, 42))
+    y = []
 
-# Load the data and labels from the HDF5 file
-for dataset_name in h5_file['hand_landmarks_group']:
-    # Load the data and labels from the dataset
-    print('Dataset loaded: ', dataset_name)
-    print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
-    print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
-    x_train = np.append(x_train, h5_file['hand_landmarks_group'][dataset_name], axis=0)
+    # Load the data and labels from the HDF5 file
+    for dataset_name in h5_file['hand_landmarks_group']:
+        # Load the data and labels from the dataset
+        print('Dataset loaded: ', dataset_name)
+        print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
+        print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
+        x = np.append(x, h5_file['hand_landmarks_group'][dataset_name], axis=0)
 
-    # Append the label to the list of labels
-    label = h5_file['hand_landmarks_group'][dataset_name].attrs['label']
-    for i in range(h5_file['hand_landmarks_group'][dataset_name].shape[0]):
-        entry_label = label
-        y_train.append(entry_label)
+        # Append the label to the list of labels
+        label = h5_file['hand_landmarks_group'][dataset_name].attrs['label']
+        for i in range(h5_file['hand_landmarks_group'][dataset_name].shape[0]):
+            entry_label = label
+            y.append(entry_label)
 
-# Convert the labels to NumPy arrays
-y_train = np.array(y_train)
-# Print the shape of the data and labels
-print('x_train shape:', x_train.shape)
-print('y_train shape:', y_train.shape)
-# Close the HDF5 file
-h5_file.close()
+    # Convert the labels to NumPy arrays
+    y = np.array(y)
+    # Print the shape of the data and labels
+    print('x shape:', x.shape)
+    print('y shape:', y.shape)
+    # Close the HDF5 file
+    h5_file.close()
+
+    return x, y
+
+# Define the paths to the training and test HDF5 files
+training_h5_path = '../data/train/training_data.h5'
+test_h5_path = '../data/test/test_data.h5'
+# Load the data
+x_train, y_train = load_data(training_h5_path)
+#x_test, y_test = load_data(test_h5_path)
 
 # Split to test and train (for early development testing)
 # For final model, use separate test set
