@@ -133,3 +133,4 @@ dmypy.json
 
 # Data
 data/train/*/
+data/test/*/
