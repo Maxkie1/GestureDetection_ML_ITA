@@ -36,6 +36,7 @@ def process_image_with_hands(file_path):
 
             # If no hand landmarks are detected, skip to the next iteration
             if not results.multi_hand_landmarks:
+                print("No hand landmarks detected: ", file_path)
                 return None, None
 
             # Iterate over the detected hand landmarks
@@ -92,7 +93,6 @@ def print_hdf5_item(name, item):
     # If the item is a dataset, print its shape and data
     if isinstance(item, h5py.Dataset):
         print(f'shape: {item.shape}')
-        # print(f'data: {item[:]}')
 
 # Store the hand landmarks in a HDF5 file
 def store_hand_landmarks(dir_path, h5_path):
@@ -119,6 +119,10 @@ def store_hand_landmarks(dir_path, h5_path):
 
         # Iterate over the files in the directory
         for filename in os.listdir(full_path):
+
+            # Skip hidden files
+            if filename.startswith('.'):
+                continue
 
             # Create the full file path
             file_path = os.path.join(full_path, filename)
@@ -158,4 +162,6 @@ test_dir_path = '../data/test'
 test_h5_path = '../data/test/test_data.h5'
 
 # Store the training data
-store_hand_landmarks(training_dir_path, training_h5_path)
+#store_hand_landmarks(training_dir_path, training_h5_path)
+# Store the test data
+store_hand_landmarks(test_dir_path, test_h5_path)
