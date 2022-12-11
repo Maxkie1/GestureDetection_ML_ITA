@@ -92,39 +92,38 @@ def print_hdf5_item(name, item):
     # If the item is a dataset, print its shape and data
     if isinstance(item, h5py.Dataset):
         print(f'shape: {item.shape}')
-        print(f'data: {item[:]}')
+        # print(f'data: {item[:]}')
 
-# Store the hand landmarks in an HDF5 file
-def store_hand_landmarks():
+# Store the hand landmarks in a HDF5 file
+def store_hand_landmarks(dir_path, h5_path):
 
     # Create an HDF5 file to store the hand landmarks
-    h5_file = h5py.File('../data/train/hand_landmarks.h5', 'w')
+    h5_file = h5py.File(h5_path, 'w')
     group = h5_file.create_group('hand_landmarks_group')
     print('HDF5 file created: ', h5_file.filename)
     print('HDF5 group created: ', group.name)
-    train_dir = '../data/train'
 
-    # Iterate over the directories in the train directory
-    for dirname in os.listdir(train_dir):
+    # Iterate over the directories in the directory
+    for dirname in os.listdir(dir_path):
 
         # Skip hidden directories and the HDF5 file
-        if dirname.startswith('.') or dirname=='hand_landmarks.h5':
+        if dirname.startswith('.') or dirname.endswith('.h5'):
             continue
 
         # Extract the label from the directory name
         label = int(dirname.split('_')[1])
         # Create the full directory path
-        dir_path = os.path.join(train_dir, dirname)
+        full_path = os.path.join(dir_path, dirname)
         # Create an empty array to store the hand landmarks
         data = np.empty((0, 42))
 
         # Iterate over the files in the directory
-        for filename in os.listdir(dir_path):
+        for filename in os.listdir(full_path):
 
             # Create the full file path
-            file_path = os.path.join(dir_path, filename)
+            file_path = os.path.join(full_path, filename)
             # Extract the hand landmarks from the image at the file path
-            features, normalized_coordinates = process_image_with_hands(file_path)
+            features, _ = process_image_with_hands(file_path)
             
             # Skip to the next iteration if no hand landmarks are detected
             if features is None:
@@ -145,10 +144,18 @@ def store_hand_landmarks():
         print('Dataset label:', dataset.attrs['label'])
         print('Dataset shape:', dataset.shape)
 
-    # Visit each item in the HDF5 file and print its name, type, shape, and data
+    # Visit each item in the HDF5 file and print its name, type and shape
+    print('Created HDF5 file:', h5_file.filename)
     h5_file.visititems(print_hdf5_item)
 
     # Close the HDF5 file
     h5_file.close()
 
-store_hand_landmarks()
+# Define the directory paths
+training_dir_path = '../data/train'
+training_h5_path = '../data/train/training_data.h5'
+test_dir_path = '../data/test'
+test_h5_path = '../data/test/test_data.h5'
+
+# Store the training data
+store_hand_landmarks(training_dir_path, training_h5_path)
