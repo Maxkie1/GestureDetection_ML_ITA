@@ -32,30 +32,21 @@ def process_image_with_hands(file_path):
             image = cv2.flip(cv2.imread(file_path), 1)
             # Convert the BGR image to RGB before processing
             results = hands.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-            # Print the handedness of the detected hands and draw hand landmarks on the image
 
             # If no hand landmarks are detected, skip to the next iteration
             if not results.multi_hand_landmarks:
                 print("No hand landmarks detected: ", file_path)
-                return None, None
+                return None
 
             # Iterate over the detected hand landmarks
             for hand_landmarks in results.multi_hand_landmarks:
 
                 # Convert the landmarks to a NumPy array
-                coordinates = np.array([[lmk.x, lmk.y] for lmk in hand_landmarks.landmark])
-                # Get the wrist landmark as the origin for the relative coordinates
-                wrist = np.array([hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x, hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y])
-                # Calculate the relative coordinates and flip the hand
-                relative_coordinates = -(coordinates - wrist)
-                # Normalize the relative coordinates
-                normalized_coordinates = (relative_coordinates - np.min(relative_coordinates)) / np.ptp(relative_coordinates)
-                # Flatten the normalized coordinates
-                flattened_coordinates = normalized_coordinates.flatten()
+                coordinates = np.array([[lmk.x, lmk.y, lmk.z] for lmk in hand_landmarks.landmark])
 
-                return flattened_coordinates, normalized_coordinates
+                return coordinates
 
-# Plot the hand landmarks
+# Plot hand landmarks in 2D
 def plot_hand_landmarks(coordinates):
 
     # Plot the normalized coordinates
@@ -115,7 +106,7 @@ def store_hand_landmarks(dir_path, h5_path):
         # Create the full directory path
         full_path = os.path.join(dir_path, dirname)
         # Create an empty array to store the hand landmarks
-        data = np.empty((0, 42))
+        data = np.empty((0, 21, 3))
 
         # Iterate over the files in the directory
         for filename in os.listdir(full_path):
@@ -127,7 +118,7 @@ def store_hand_landmarks(dir_path, h5_path):
             # Create the full file path
             file_path = os.path.join(full_path, filename)
             # Extract the hand landmarks from the image at the file path
-            features, _ = process_image_with_hands(file_path)
+            features = process_image_with_hands(file_path)
             
             # Skip to the next iteration if no hand landmarks are detected
             if features is None:
@@ -162,6 +153,6 @@ test_dir_path = '../data/test'
 test_h5_path = '../data/test/test_data.h5'
 
 # Store the training data
-#store_hand_landmarks(training_dir_path, training_h5_path)
+store_hand_landmarks(training_dir_path, training_h5_path)
 # Store the test data
-store_hand_landmarks(test_dir_path, test_h5_path)
+#store_hand_landmarks(test_dir_path, test_h5_path)
