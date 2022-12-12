@@ -132,8 +132,4 @@ dmypy.json
 .DS_Store
 
 # Data
-data/test/
-data/train/*/
-data/train/training_data.h5
-data/train/training_data_backup.h5
-
+data/
