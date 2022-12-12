@@ -134,3 +134,4 @@ dmypy.json
 # Data
 data/train/*/
 data/test/*/
+data/train/training_data_backup.h5

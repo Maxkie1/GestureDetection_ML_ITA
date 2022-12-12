@@ -15,6 +15,8 @@ print(__doc__)
 
 # Load the data from a HDF5 file
 def load_data(h5_path):
+
+    print('Start loading data from HDF5 file: ', h5_path)
     # Open the HDF5 file
     h5_file = h5py.File(h5_path, "r")
 
@@ -26,7 +28,7 @@ def load_data(h5_path):
     for dataset_name in h5_file['hand_landmarks_group']:
 
         # Print the dataset name, label, and shape
-        print('Dataset loaded: ', dataset_name)
+        print('Dataset name: ', dataset_name)
         print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
         print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
 
@@ -41,24 +43,20 @@ def load_data(h5_path):
 
     # Convert the labels to NumPy arrays
     y = np.array(y)
-
     # Print the shape of the data and labels
     print('x shape:', x.shape)
     print('y shape:', y.shape)
-
     # Close the HDF5 file
     h5_file.close()
+    print('Data loaded from HDF5 file: ', h5_path)
 
-    # Return the data and labels
     return x, y
 
 # Preprrocess data
 def preprocess_data(coordinates):
     
-    print('coordinates shape:', coordinates.shape)
     # Get the wrist landmark as the origin for the relative coordinates
     wrist = coordinates[0]
-    print('wrist:', wrist)
     # Calculate the relative coordinates and flip the hand
     relative_coordinates = -(coordinates - wrist)
     # Normalize the relative coordinates
@@ -75,15 +73,17 @@ test_h5_path = '../data/test/test_data.h5'
 # Load the data
 x_train, y_train = load_data(training_h5_path)
 x_test, y_test = load_data(test_h5_path)
-print('x_train shape:', x_train.shape)
 
 # Preprocess the data
 x_train = np.array([preprocess_data(x) for x in x_train])
 x_test = np.array([preprocess_data(x) for x in x_test])
+print('Training Data preprocessed to shape:', x_train.shape, 'and type:', x_train.dtype, 'and range:', np.min(x_train), '-', np.max(x_train))
+print('Test Data preprocessed to shape:', x_test.shape, 'and type:', x_test.dtype, 'and range:', np.min(x_test), '-', np.max(x_test))
 
 # Shift the labels so that they start at 0
 y_train -= 1
 y_test -= 1
+print('Labels shifted.')
 
 # Shuffle training data and labels
 indices = np.arange(x_train.shape[0])
@@ -91,15 +91,17 @@ np.random.seed(42)
 np.random.shuffle(indices)
 x_train = x_train[indices]
 y_train = y_train[indices]
+print('Training data shuffled.')
 
 # One-hot encode the labels
 y_train = tf.keras.utils.to_categorical(y_train, num_classes=10)
 y_test = tf.keras.utils.to_categorical(y_test, num_classes=10)
+print('Labels one-hot encoded.')
 
 # Define the hyperparameter search space
 param_distributions = {
-    "batch_size": [16, 32, 64, 128],
-    "epochs": [20, 40, 60, 80, 100],
+    "batch_size": [16, 32, 64, 128, 256, 512],
+    "epochs": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
 }
 
 # Define the model's architecture
