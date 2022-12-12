@@ -30,9 +30,9 @@ model = tf.keras.models.load_model("../models/gesture_recognition_model.h5")
 def predict_gesture(hand_landmarks):
 
     # Convert the landmarks to a NumPy array
-    coordinates = np.array([[lmk.x, lmk.y] for lmk in hand_landmarks.landmark])
+    coordinates = np.array([[lmk.x, lmk.y, lmk.z] for lmk in hand_landmarks.landmark])
     # Get the wrist landmark as the origin for the relative coordinates
-    wrist = np.array([hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x, hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y])
+    wrist = np.array([hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x, hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y, hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].z])
     # Calculate the relative coordinates and flip the hand
     relative_coordinates = -(coordinates - wrist)
     # Normalize the relative coordinates
