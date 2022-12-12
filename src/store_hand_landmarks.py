@@ -148,11 +148,11 @@ def store_hand_landmarks(dir_path, h5_path):
 
 # Define the directory paths
 training_dir_path = '../data/train'
-training_h5_path = '../data/train/training_data.h5'
+training_h5_path = '../data/train/training_data_demo.h5'
 test_dir_path = '../data/test'
 test_h5_path = '../data/test/test_data.h5'
 
 # Store the training data
-store_hand_landmarks(training_dir_path, training_h5_path)
+#store_hand_landmarks(training_dir_path, training_h5_path)
 # Store the test data
 #store_hand_landmarks(test_dir_path, test_h5_path)
