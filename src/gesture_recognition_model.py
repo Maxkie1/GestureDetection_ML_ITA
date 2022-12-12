@@ -103,7 +103,7 @@ wrapped_model = KerasClassifier(model=model, verbose=1)
 bayes_search = BayesSearchCV(
     wrapped_model,
     param_distributions,
-    n_iter=2,
+    n_iter=1,
     scoring="accuracy",
     cv=3,
     random_state=42,
