@@ -4,7 +4,7 @@ This project uses a neural network to recognize gestures from hands in a live vi
 
 ## Usage
 
-To train the model, run the following command:
+To train the model, run the following command (Note that the datasets are currently not in repo, fix pending):
 
 ```
 python gesture_recognition_model.py
