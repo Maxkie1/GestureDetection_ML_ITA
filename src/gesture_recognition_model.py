@@ -1,5 +1,5 @@
 """
-Trains a neural network to recognize gestures from images of hands.
+Trains a neural network to recognize ten different hand gestures.
 The trained model will be saved to a file named gesture_recognition_model.h5.
 """
 
