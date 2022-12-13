@@ -4,7 +4,7 @@ This project uses a neural network to recognize gestures from hands in a live vi
 
 ## Usage
 
-To train the model, you will need [to download the datasets](https://dhbwstg-my.sharepoint.com/:f:/g/personal/inf20111_lehre_dhbw-stuttgart_de/EkzpxgUaZn9FhQzTylc5D-8B0XFuU4BwawXWmELFV0OezA?e=uR1XDG) and place them in the `data/train` and `data/test` directories. You can create the directories by running the following commands:
+To train the model, you will need [to download the traind and test datasets](https://dhbwstg-my.sharepoint.com/:f:/g/personal/inf20111_lehre_dhbw-stuttgart_de/EkzpxgUaZn9FhQzTylc5D-8B0XFuU4BwawXWmELFV0OezA?e=uR1XDG) and place them in the `data/train` and `data/test` directories. You can create the directories by running the following commands:
 
 ```
 mkdir data
