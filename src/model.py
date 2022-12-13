@@ -1,6 +1,5 @@
 """
-Trains a neural network to recognize ten different hand gestures.
-The trained model will be saved to a file named gesture_recognition_model.h5.
+The model.py script provides central functionalities for using the hand gesture recognition model.
 """
 
 # Import the necessary libraries
@@ -52,7 +51,7 @@ def load_data(h5_path):
 
     return x, y
 
-# Preprocess data
+# Preprocess the coordinates
 def preprocess_coordinates(coordinates):
     
     # Get the wrist landmark as the origin for the relative coordinates
@@ -145,19 +144,29 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributio
     # Save the model to a HDF5 file
     bayes_search.best_estimator_.model.save("../models/gesture_recognition_model.h5")
 
-# Define the paths to the training and test HDF5 files
-training_h5_path = '../data/train/training_data.h5'
-test_h5_path = '../data/test/test_data.h5'
+# Predict the gesture
+def predict_gesture(model, hand_landmarks):
+    
+    # Convert the landmarks to a NumPy array
+    coordinates = np.array([[lmk.x, lmk.y, lmk.z] for lmk in hand_landmarks.landmark])
+    # Preprocess the coordinates
+    flattened_coordinates = preprocess_coordinates(coordinates)
+    # Predict the gesture
+    prediction = model.predict(flattened_coordinates.reshape(1, -1))
+    # Get the index of the predicted gesture
+    predicted_gesture = np.argmax(prediction)
+    # Get the confidence of the prediction
+    confidence = prediction[0][predicted_gesture]
+    # Print the gesture and confidence
+    print("Predicted gesture: {}, confidence: {}".format(predicted_gesture, confidence))
 
-# Define the hyperparameter search space
-param_distributions = {
-    "batch_size": [16, 32, 64, 128, 256, 512],
-    "epochs": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-}
+# Load the model
+def load_model(model_path):
 
-# Prepare the data
-x_train, y_train, x_test, y_test = prepare_data(training_h5_path, test_h5_path)
+    # Load the model from the HDF5 file
+    model = tf.keras.models.load_model(model_path)
+    print('Model loaded from HDF5 file: ', model_path)
+    # Print the model's architecture
+    model.summary()
 
-# Train and evaluate the model
-train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=1, cv=3, n_jobs=-1, verbose=1)
-
+    return model  
