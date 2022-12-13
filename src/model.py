@@ -15,7 +15,7 @@ print(__doc__)
 # Load the data from a HDF5 file
 def load_data(h5_path):
 
-    print('Start loading data from HDF5 file: ', h5_path)
+    #print('Start loading data from HDF5 file: ', h5_path)
     # Open the HDF5 file
     h5_file = h5py.File(h5_path, "r")
 
@@ -27,9 +27,9 @@ def load_data(h5_path):
     for dataset_name in h5_file['hand_landmarks_group']:
 
         # Print the dataset name, label, and shape
-        print('Dataset name: ', dataset_name)
-        print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
-        print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
+        #print('Dataset name: ', dataset_name)
+        #print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
+        #print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
 
         # Append the data to the list of x
         x = np.append(x, h5_file['hand_landmarks_group'][dataset_name], axis=0)
@@ -43,7 +43,7 @@ def load_data(h5_path):
     # Convert the labels to NumPy arrays
     y = np.array(y)
     # Print the shape of the data and labels
-    print('x shape:', x.shape)
+    print('X shape:', x.shape)
     print('y shape:', y.shape)
     # Close the HDF5 file
     h5_file.close()
