@@ -1,3 +1,7 @@
+"""
+The azure_utils.py script contains the Azure Machine Learning utilities.
+"""
+
 # Import the necessary libraries
 from azure.ai.ml import MLClient
 from azure.ai.ml import command
