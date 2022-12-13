@@ -24,7 +24,7 @@ cd src
 python train_model.py
 ```
 
-2. Use the `train_model.ipynb` notebook in your Google Collab environment
+2. Use the `train_model.ipynb` notebook in your Google Colab GPU runtime.
 
 The trained model is stored in a file named `gesture_recognition_model.h5`.
 Note that a perfectly fitted pretrained model already exists in the repository.
@@ -52,13 +52,13 @@ The project requires the following libraries:
 - `scikeras`
 - `scikit-optimize`
 
-To install these libraries globally, run the following command (unrecommended):
+To install these libraries globally, run the following command (**unrecommended**):
 
 ```
 pip install -r requirements.txt
 ```
 
-To install these libraries in a conda environment, run the following command (recommended):
+To install these libraries in a conda environment, run the following command (**recommended**):
 
 ```
 conda create --name thisproject
