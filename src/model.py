@@ -115,9 +115,9 @@ def create_model():
     # Define the model's architecture
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(63,)),
-        tf.keras.layers.Dense(16, activation='relu'),
-        tf.keras.layers.Dense(16, activation='relu'),
-        tf.keras.layers.Dense(16, activation='relu'),
+        tf.keras.layers.Dense(128, activation='relu'),
+        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(32, activation='relu'),
         tf.keras.layers.Dense(10, activation="softmax"),
     ])
 
