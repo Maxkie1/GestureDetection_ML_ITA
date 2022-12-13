@@ -33,11 +33,11 @@ except:
 
 # Define the hyperparameter space
 hyperparameter_space = {
-    'batch_size': Choice([32, 64, 128]),
-    'epochs': Choice([10, 20, 30]),
-    'first_layer_neurons': Choice([32, 64, 128]),
-    'second_layer_neurons': Choice([32, 64, 128]),
-    'third_layer_neurons': Choice([32, 64, 128]),
+    'batch_size': Choice([16, 32,64, 128, 256]),
+    'epochs': Choice([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]),
+    'first_layer_neurons': Choice([16, 32, 64, 128, 256]),
+    'second_layer_neurons': Choice([16, 32, 64, 128, 256]),
+    'third_layer_neurons': Choice([16, 32, 64, 128, 256]),
 }
 
 

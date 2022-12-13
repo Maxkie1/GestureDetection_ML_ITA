@@ -98,30 +98,44 @@ def prepare_data(training_path, test_path):
 
     return x_train, y_train, x_test, y_test
 
-# Train and evaluate the model
-def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter, cv, n_jobs, verbose):
+# Load the model
+def load_model(model_path):
+
+    # Load the model from the HDF5 file
+    model = tf.keras.models.load_model(model_path)
+    print('Model loaded from HDF5 file: ', model_path)
+    # Print the model's architecture
+    model.summary()
+
+    return model  
+
+# Create the model
+def create_model():
 
     # Define the model's architecture
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(63,)),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(32, activation='relu'),
+        tf.keras.layers.Dense(16, activation='relu'),
+        tf.keras.layers.Dense(16, activation='relu'),
+        tf.keras.layers.Dense(16, activation='relu'),
         tf.keras.layers.Dense(10, activation="softmax"),
     ])
 
     # Print the model's architecture
     model.summary()
-
     # Compile the model with the Adam optimizer and the categorical cross-entropy loss
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-
     # Wrap the model in a KerasClassifier
     wrapped_model = KerasClassifier(model=model, verbose=1)
 
+    return wrapped_model
+
+# Train and evaluate the model
+def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter, cv, n_jobs, verbose):
+
     # Define the Bayesian optimization search object
     bayes_search = BayesSearchCV(
-        wrapped_model,
+        create_model(),
         param_distributions,
         n_iter=n_iter,
         scoring="accuracy",
@@ -159,14 +173,3 @@ def predict_gesture(model, hand_landmarks):
     confidence = prediction[0][predicted_gesture]
     # Print the gesture and confidence
     print("Predicted gesture: {}, confidence: {}".format(predicted_gesture, confidence))
-
-# Load the model
-def load_model(model_path):
-
-    # Load the model from the HDF5 file
-    model = tf.keras.models.load_model(model_path)
-    print('Model loaded from HDF5 file: ', model_path)
-    # Print the model's architecture
-    model.summary()
-
-    return model  
