@@ -156,7 +156,7 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributio
     print("Best hyperparameters:", bayes_search.best_params_)
 
     # Save the model to a HDF5 file
-    bayes_search.best_estimator_.model.save("../models/gesture_recognition_model.h5")
+    bayes_search.best_estimator_.model.save("../models/model.h5")
 
 # Predict the gesture
 def predict_gesture(model, hand_landmarks):
