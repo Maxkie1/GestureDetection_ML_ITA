@@ -22,17 +22,23 @@ training_h5_path = '../data/train/training_data.h5'
 test_h5_path = '../data/test/test_data.h5'
 
 # Define the hyperparameter search space
-batch_size = [800, 1000]
-epochs = [1, 3]
-neurons = [16, 35]
+batch_size = [1000, 2000, 3000]
+epochs = [1, 2, 3]
+hidden_layers = [1, 2, 3]
+neurons_layer1 = [16, 32, 64, 128, 256]
+neurons_layer2 = [16, 32, 64, 128, 256]
+neurons_layer3 = [16, 32, 64, 128, 256]
 param_distributions = dict(
     batch_size=batch_size,
     epochs=epochs,
-    model__neurons=neurons,
+    model__hidden_layers=hidden_layers,
+    model__neurons_layer1=neurons_layer1,
+    model__neurons_layer2=neurons_layer2,
+    model__neurons_layer3=neurons_layer3
 )
 
 # Prepare the data
 x_train, y_train, x_test, y_test = model.prepare_data(training_h5_path, test_h5_path)
 
 # Train and evaluate the model
-model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=2, cv=2, n_jobs=-1, verbose=1)
+model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=4, cv=3, n_jobs=-1, verbose=1)
