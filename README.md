@@ -56,15 +56,15 @@ The project requires the following libraries:
 
 To install these libraries globally, run the following command (**unrecommended**):
 
-```shell
+```
 pip install -r requirements.txt
 ```
 
 To install these libraries in a conda environment, run the following command (**recommended**):
 
-```shell
-conda create --name thisproject
-conda activate thisproject 
+```
+conda create --name <thisproject>
+conda activate <thisproject>
 pip install -r requirements.txt
 ```
 
