@@ -2,12 +2,13 @@
 The main.py script uses a trained model to classify the gestures performed by the detected hands in a video stream.
 The video stream from the default webcam will be displayed, and the gestures performed by the detected hands
 will be classified and displayed on the video.
-The script assumes that the trained model is saved in a file named gesture_recognition_model.h5.
+The script assumes that the trained model is saved in a file named main_model.h5.
 """
 
 # Import the necessary modules
 import cv2
 import model
+import h5py
 import mediapipe as mp
 
 # Import the drawing utilities and styles from the MediaPipe Hands module
@@ -22,7 +23,7 @@ print(__doc__)
 cap = cv2.VideoCapture(0)
 
 # Load the trained model
-model_path = '../models/gesture_recognition_model.h5'
+model_path = '../models/model_main.h5'
 gesture_recognition_model = model.load_model(model_path)
 
 # Use the Hands class from the MediaPipe Hands module to process the video frames

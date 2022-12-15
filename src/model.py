@@ -7,6 +7,7 @@ import tensorflow as tf
 from scikeras.wrappers import KerasClassifier
 import h5py
 import numpy as np
+import pandas as pd
 from skopt import BayesSearchCV
 
 # Print the docstring
@@ -109,34 +110,47 @@ def load_model(model_path):
 
     return model  
 
+# Save the model
+def save_model(model, df):
+
+    # Generate unique 8 digts id based on model config
+    model_id = abs(hash(str(model.get_config()))) % (10 ** 8)
+    # Save the cv results to a markdown file
+    df.to_markdown("../models/results/cv_results_{}.md".format(model_id))
+    print('CV results saved to markdown file: ', "../models/results/cv_results_{}.md".format(model_id))
+    # Save the model to the HDF5 file
+    model.save("../models/model_{}.h5".format(model_id))
+    print('Model saved to HDF5 file: ', "../models/model_{}.h5".format(model_id))
+
 # Create the model
-def create_model():
+def create_model(neurons):
 
     # Define the model's architecture
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(63,)),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(32, activation='relu'),
+        tf.keras.layers.Dense(neurons, activation='relu'),
+        tf.keras.layers.Dense(neurons, activation='relu'),
+        tf.keras.layers.Dense(neurons, activation='relu'),
         tf.keras.layers.Dense(10, activation="softmax"),
     ])
 
-    # Print the model's architecture
-    model.summary()
     # Compile the model with the Adam optimizer and the categorical cross-entropy loss
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-    # Wrap the model in a KerasClassifier
-    wrapped_model = KerasClassifier(model=model, verbose=1)
 
-    return wrapped_model
+    return model
 
 # Train and evaluate the model
 def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter, cv, n_jobs, verbose):
 
+    # Set the random seed for reproducibility
+    tf.random.set_seed(42)
+
+    model = KerasClassifier(model=create_model, verbose=1)
+
     # Define the Bayesian optimization search object
     bayes_search = BayesSearchCV(
-        create_model(),
-        param_distributions,
+        estimator=model,
+        search_spaces=param_distributions,
         n_iter=n_iter,
         scoring="accuracy",
         cv=cv,
@@ -149,15 +163,26 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributio
     # Fit the model to the training data
     bayes_search.fit(x_train, y_train)
 
-    # Print the train, validation, test accuracies and best hyperparameters
+    # Save the cv results to a pandas dataframe
+    df = pd.DataFrame(bayes_search.cv_results_)
+
+    # Create the model with the best hyperparameters
+    best_model = create_model(bayes_search.best_params_["model__neurons"])
+    # Fit the model to the training data
+    best_model.fit(x_train, y_train, batch_size=bayes_search.best_params_["batch_size"], epochs=bayes_search.best_params_["epochs"], verbose=1)
+    # Evaluate the model on the test data
+    _, test_acc = best_model.evaluate(x_test, y_test, verbose=1)
+
+    # Print the model summanry, best hyperparameters, train, validation and test accuracy
+    best_model.summary()
+    print("Best hyperparameters:", bayes_search.best_params_)
     print("Train accuracy:", bayes_search.cv_results_["mean_train_score"][bayes_search.best_index_])
     print("Validation accuracy:", bayes_search.best_score_)
-    print("Test accuracy:", bayes_search.score(x_test, y_test))
-    print("Best hyperparameters:", bayes_search.best_params_)
+    print('Test accuracy:', test_acc)
 
-    # Save the model to a HDF5 file
-    bayes_search.best_estimator_.model.save("../models/model.h5")
-
+    # Save the model
+    save_model(best_model, df)
+           
 # Predict the gesture
 def predict_gesture(model, hand_landmarks):
     
