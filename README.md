@@ -82,7 +82,7 @@ Adapted from [this Stack Overflow answer](https://stackoverflow.com/questions/71
 pip install protobuf --upgrade
 ```
 
-2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say `Documents`)
+2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
 
 3. Uninstall the latest version of `protobuf`. To do this, run the following command:
 
@@ -96,6 +96,6 @@ pip uninstall protobuf
 pip install protobuf==<version-number>
 ```
 
-5. Copy `builder.py` from (let's say `Documents`) to `...\site-packages\google\protobuf\internal`
+5. Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
 
 6. Run your code
