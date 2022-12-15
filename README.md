@@ -26,7 +26,7 @@ python train_model.py
 
 2. Use the `train_model.ipynb` notebook in your Google Colab GPU runtime.
 
-The trained model is stored in a file named `gesture_recognition_model.h5`.
+The trained model is stored in a file named `model_<hash>.h5`.
 Note that a perfectly fitted pretrained model already exists in the repository.
 Therefore, starting the training process is recommended only for your own research purposes.
 
@@ -56,13 +56,13 @@ The project requires the following libraries:
 
 To install these libraries globally, run the following command (**unrecommended**):
 
-```
+```shell
 pip install -r requirements.txt
 ```
 
 To install these libraries in a conda environment, run the following command (**recommended**):
 
-```
+```shell
 conda create --name thisproject
 conda activate thisproject 
 pip install -r requirements.txt
@@ -82,7 +82,7 @@ Adapted from [this Stack Overflow answer](https://stackoverflow.com/questions/71
 pip install protobuf --upgrade
 ```
 
-2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
+2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say `Documents`)
 
 3. Uninstall the latest version of `protobuf`. To do this, run the following command:
 
@@ -93,9 +93,9 @@ pip uninstall protobuf
 4. Install a version of `protobuf` that is compatible with `tensorflow` (e.g. 3.19.6). To do this, run the following command:
 
 ```
-pip install protobuf==[version-number]
+pip install protobuf==<version-number>
 ```
 
-5. Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
+5. Copy `builder.py` from (let's say `Documents`) to `...\site-packages\google\protobuf\internal`
 
 6. Run your code
