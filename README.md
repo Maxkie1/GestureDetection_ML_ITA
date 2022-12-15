@@ -51,6 +51,8 @@ The project requires the following libraries:
 - `h5py`
 - `scikeras`
 - `scikit-optimize`
+- `pandas`
+- `tabulate`
 
 To install these libraries globally, run the following command (**unrecommended**):
 
