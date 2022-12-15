@@ -29,9 +29,7 @@ param_distributions = dict(
     batch_size=batch_size,
     epochs=epochs,
     model__neurons=neurons,
-    
 )
-
 
 # Prepare the data
 x_train, y_train, x_test, y_test = model.prepare_data(training_h5_path, test_h5_path)
