@@ -11,12 +11,6 @@ import tensorflow as tf
 # Print the docstring
 print(__doc__)
 
-# Confirm that we can connect Tensorflow to the GPU
-device_name = tf.test.gpu_device_name()
-if device_name != '/device:GPU:0':
-  raise SystemError('GPU device not found')
-print('Found GPU at: {}'.format(device_name))
-
 # Define the paths to the training and test HDF5 files
 training_h5_path = '../data/train/training_data.h5'
 test_h5_path = '../data/test/test_data.h5'
