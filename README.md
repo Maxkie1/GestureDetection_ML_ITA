@@ -17,14 +17,14 @@ mkdir test
 
 To train the model, there are two methods:
 
-1. Run the following commands:
+**1.** Run the following commands:
 
 ```
 cd src
 python train_model.py
 ```
 
-2. Use the `train_model.ipynb` notebook in your Google Colab GPU runtime.
+**2.** Use the `train_model.ipynb` notebook in your Google Colab GPU runtime.
 
 The training is performed with Bayesian optimization over a set of hyperparameters. The best model is selected based on the validation accuracy which is calculated using the cross-validation technique.
 
@@ -78,26 +78,26 @@ To resolve this issue, you can try the following method:
 
 Adapted from [this Stack Overflow answer](https://stackoverflow.com/questions/71759248/importerror-cannot-import-name-builder-from-google-protobuf-internal)
 
-1. Install the latest version of the `protobuf` that includes the `builder.py` script. To do this, run the following command:
+**1.** Install the latest version of the `protobuf` that includes the `builder.py` script. To do this, run the following command:
 
 ```
 pip install protobuf --upgrade
 ```
 
-2. Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
+**2.** Copy `builder.py` from `...\site-packages\google\protobuf\internal` to your computer (let's say 'Documents')
 
-3. Uninstall the latest version of `protobuf`. To do this, run the following command:
+**3.** Uninstall the latest version of `protobuf`. To do this, run the following command:
 
 ```
 pip uninstall protobuf
 ```
 
-4. Install a version of `protobuf` that is compatible with `tensorflow` (e.g. 3.19.6). To do this, run the following command:
+**4.** Install a version of `protobuf` that is compatible with `tensorflow` (e.g. 3.19.6). To do this, run the following command:
 
 ```
 pip install protobuf==<version-number>
 ```
 
-5. Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
+**5.** Copy `builder.py` from (let's say 'Documents') to `...\site-packages\google\protobuf\internal`
 
-6. Run your code
+**6.** Run your code
