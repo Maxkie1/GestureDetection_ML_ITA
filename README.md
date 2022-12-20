@@ -5,6 +5,7 @@ This project uses a neural network to recognize gestures from hands in a live vi
 ## Usage
 
 In general, it is recommended to clone this repository to your Google Drive for an easy integration with Google Colab.
+
 To train the model, you need to download [the train and test datasets](https://dhbwstg-my.sharepoint.com/:f:/g/personal/inf20111_lehre_dhbw-stuttgart_de/EkzpxgUaZn9FhQzTylc5D-8B0XFuU4BwawXWmELFV0OezA?e=uR1XDG) and place them in the `data/train` and `data/test` directories. You can create the directories by running the following commands:
 
 ```
