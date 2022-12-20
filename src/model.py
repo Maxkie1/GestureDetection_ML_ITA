@@ -115,9 +115,9 @@ def save_model(model, df):
 
     # Generate unique 8 digts id based on model config
     model_id = abs(hash(str(model.get_config()))) % (10 ** 8)
-    # Save the cv results to a markdown file
+    # Save the results to a markdown file
     df.to_markdown("../models/results/cv_results_{}.md".format(model_id))
-    print('CV results saved to markdown file: ', "../models/results/cv_results_{}.md".format(model_id))
+    print('Results saved to markdown file: ', "../models/results/results_{}.md".format(model_id))
     # Save the model to the HDF5 file
     model.save("../models/model_{}.h5".format(model_id))
     print('Model saved to HDF5 file: ', "../models/model_{}.h5".format(model_id))
@@ -126,27 +126,15 @@ def save_model(model, df):
 def create_model(hidden_layers, neurons_layer1, neurons_layer2, neurons_layer3):
 
     # Define the model architecture based on the number of hidden layers
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Input(shape=(63,)))
     if hidden_layers == 1:
-        model = tf.keras.Sequential([
-            tf.keras.layers.Input(shape=(63,)),
-            tf.keras.layers.Dense(neurons_layer1, activation='relu'),
-            tf.keras.layers.Dense(10, activation="softmax"),
-        ])
-    elif hidden_layers == 2:
-        model = tf.keras.Sequential([
-            tf.keras.layers.Input(shape=(63,)),
-            tf.keras.layers.Dense(neurons_layer1, activation='relu'),
-            tf.keras.layers.Dense(neurons_layer2, activation='relu'),
-            tf.keras.layers.Dense(10, activation="softmax"),
-        ])
-    elif hidden_layers == 3:
-        model = tf.keras.Sequential([
-            tf.keras.layers.Input(shape=(63,)),
-            tf.keras.layers.Dense(neurons_layer1, activation='relu'),
-            tf.keras.layers.Dense(neurons_layer2, activation='relu'),
-            tf.keras.layers.Dense(neurons_layer3, activation='relu'),
-            tf.keras.layers.Dense(10, activation="softmax"),
-        ])
+        model.add(tf.keras.layers.Dense(neurons_layer1, activation="relu"))
+        if hidden_layers == 2:
+            model.add(tf.keras.layers.Dense(neurons_layer2, activation="relu"))
+            if hidden_layers == 3:
+                model.add(tf.keras.layers.Dense(neurons_layer3, activation="relu"))
+    model.add(tf.keras.layers.Dense(10, activation="softmax"))
 
     # Compile the model with the Adam optimizer and the categorical cross-entropy loss
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
