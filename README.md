@@ -26,9 +26,11 @@ python train_model.py
 
 2. Use the `train_model.ipynb` notebook in your Google Colab GPU runtime.
 
-The trained model is stored in a file named `model_<hash>.h5`.
-Note that a perfectly fitted pretrained model already exists in the repository.
-Therefore, starting the training process is recommended only for your own research purposes.
+The training is performed with Bayesian optimization over a set of hyperparameters. The best model is selected based on the validation accuracy which is calculated using the cross-validation technique. 
+
+The trained model is stored in a file named `../models/model_<hash>.h5`. The training results are stored in a file named `../models/results/results_<hash>.md`.
+
+Note that a perfectly fitted pretrained model already exists in a file named `../models/model_main.h5`. Therefore, starting the training process is recommended only for your own research purposes. 
 
 To start the application, run the following commands:
 
