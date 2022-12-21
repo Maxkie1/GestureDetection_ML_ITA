@@ -22,13 +22,17 @@ hidden_layers = [1, 2, 3]
 neurons_layer1 = [16, 32, 64, 128, 256]
 neurons_layer2 = [16, 32, 64, 128, 256]
 neurons_layer3 = [16, 32, 64, 128, 256]
+batch_normalization = [True, False]
+dropout = [True, False]
 param_distributions = dict(
     batch_size=batch_size,
     epochs=epochs,
     model__hidden_layers=hidden_layers,
     model__neurons_layer1=neurons_layer1,
     model__neurons_layer2=neurons_layer2,
-    model__neurons_layer3=neurons_layer3
+    model__neurons_layer3=neurons_layer3,
+    model__batch_normalization=batch_normalization,
+    model__dropout=dropout
 )
 
 # Prepare the data

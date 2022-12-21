@@ -8,7 +8,6 @@ The script assumes that the trained model is saved in a file named main_model.h5
 # Import the necessary modules
 import cv2
 import model
-import h5py
 import mediapipe as mp
 
 # Import the drawing utilities and styles from the MediaPipe Hands module

@@ -116,25 +116,41 @@ def save_model(model, df):
     # Generate unique 8 digts id based on model config
     model_id = abs(hash(str(model.get_config()))) % (10 ** 8)
     # Save the results to a markdown file
-    df.to_markdown("../models/results/cv_results_{}.md".format(model_id))
+    df.to_markdown("../models/results/results_{}.md".format(model_id))
     print('Results saved to markdown file: ', "../models/results/results_{}.md".format(model_id))
     # Save the model to the HDF5 file
     model.save("../models/model_{}.h5".format(model_id))
     print('Model saved to HDF5 file: ', "../models/model_{}.h5".format(model_id))
 
 # Create the model
-def create_model(hidden_layers, neurons_layer1, neurons_layer2, neurons_layer3):
+def create_model(hidden_layers, neurons_layer1, neurons_layer2, neurons_layer3, batch_normalization, dropout):
 
     # Define the model architecture based on the number of hidden layers
     model = tf.keras.Sequential()
     model.add(tf.keras.layers.Input(shape=(63,)))
-    if hidden_layers == 1:
-        model.add(tf.keras.layers.Dense(neurons_layer1, activation="relu"))
-        if hidden_layers == 2:
-            model.add(tf.keras.layers.Dense(neurons_layer2, activation="relu"))
+    if hidden_layers == 1 or hidden_layers == 2 or hidden_layers == 3:
+        model.add(tf.keras.layers.Dense(neurons_layer1))
+        model.add(tf.keras.layers.Activation('relu'))
+        if batch_normalization == True:
+            model.add(tf.keras.layers.BatchNormalization())
+        if dropout == True:
+            model.add(tf.keras.layers.Dropout(0.2))
+        if hidden_layers == 2 or hidden_layers == 3:
+            model.add(tf.keras.layers.Dense(neurons_layer2))
+            model.add(tf.keras.layers.Activation('relu'))
+            if batch_normalization == True:
+                model.add(tf.keras.layers.BatchNormalization())
+            if dropout == True:
+                model.add(tf.keras.layers.Dropout(0.2))
             if hidden_layers == 3:
-                model.add(tf.keras.layers.Dense(neurons_layer3, activation="relu"))
-    model.add(tf.keras.layers.Dense(10, activation="softmax"))
+                model.add(tf.keras.layers.Dense(neurons_layer3))
+                model.add(tf.keras.layers.Activation('relu'))
+                if batch_normalization == True:
+                    model.add(tf.keras.layers.BatchNormalization())
+                if dropout == True:
+                    model.add(tf.keras.layers.Dropout(0.2))
+    model.add(tf.keras.layers.Dense(10))
+    model.add(tf.keras.layers.Activation('softmax'))
 
     # Compile the model with the Adam optimizer and the categorical cross-entropy loss
     model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
@@ -147,6 +163,7 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributio
     # Set the random seed for reproducibility
     tf.random.set_seed(42)
 
+    # Create the KerasClassifier model
     model = KerasClassifier(model=create_model, verbose=1)
 
     # Define the Bayesian optimization search object
@@ -169,7 +186,13 @@ def train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributio
     df = pd.DataFrame(bayes_search.cv_results_)
 
     # Create the model with the best hyperparameters
-    best_model = create_model(bayes_search.best_params_["model__hidden_layers"], bayes_search.best_params_["model__neurons_layer1"], bayes_search.best_params_["model__neurons_layer2"], bayes_search.best_params_["model__neurons_layer3"])
+    best_model = create_model(
+        bayes_search.best_params_["model__hidden_layers"], 
+        bayes_search.best_params_["model__neurons_layer1"], 
+        bayes_search.best_params_["model__neurons_layer2"], 
+        bayes_search.best_params_["model__neurons_layer3"], 
+        bayes_search.best_params_["model__batch_normalization"], 
+        bayes_search.best_params_["model__dropout"])
     # Fit the model to the training data
     best_model.fit(x_train, y_train, batch_size=bayes_search.best_params_["batch_size"], epochs=bayes_search.best_params_["epochs"], verbose=1)
     # Evaluate the model on the test data
