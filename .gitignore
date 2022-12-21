@@ -131,8 +131,6 @@ dmypy.json
 # Macos
 .DS_Store
 
-# Data
-data/
-
 # Models
-models/
+models/model_*.h5
+!models/model_main.h5
