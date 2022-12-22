@@ -1,12 +1,11 @@
 """
 the train_model.py script a neural network to recognize ten different hand gestures.
-The trained model will be saved to a file named gesture_recognition_model.h5.
-The script assumes that the training and test data are saved in HDF5 files named training_data.h5 and test_data.h5.
+The trained model will be stored in models/model_<hash>.h5. The training results will be in models/results/results_<hash>.md.
+The script assumes that the training and test data are available in  data/train/training_data.h5 and data/test/test_data.h5.
 """
 
 # Import the necessary libraries
 import model
-import tensorflow as tf
 
 # Print the docstring
 print(__doc__)
@@ -16,7 +15,7 @@ training_h5_path = '../data/train/training_data.h5'
 test_h5_path = '../data/test/test_data.h5'
 
 # Define the hyperparameter search space
-batch_size = [16, 32, 64, 128, 256, 512]
+batch_size = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
 epochs = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 hidden_layers = [1, 2, 3]
 neurons_layer1 = [16, 32, 64, 128, 256]
