@@ -2,7 +2,7 @@
 The main.py script uses a trained model to classify the gestures performed by the detected hands in a video stream.
 The video stream from the default webcam will be displayed, and the gestures performed by the detected hands
 will be classified and displayed on the video.
-The script assumes that the trained model is saved in a file named main_model.h5.
+The script assumes that the trained model is available in  models/model_main.h5.
 """
 
 # Import the necessary modules
