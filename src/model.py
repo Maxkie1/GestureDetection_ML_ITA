@@ -27,11 +27,6 @@ def load_data(h5_path):
     # Load the data and labels from the HDF5 file
     for dataset_name in h5_file['hand_landmarks_group']:
 
-        # Print the dataset name, label, and shape
-        #print('Dataset name: ', dataset_name)
-        #print('Dataset label:', h5_file['hand_landmarks_group'][dataset_name].attrs['label'])
-        #print('Dataset shape:', h5_file['hand_landmarks_group'][dataset_name].shape)
-
         # Append the data to the list of x
         x = np.append(x, h5_file['hand_landmarks_group'][dataset_name], axis=0)
   
