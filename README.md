@@ -8,7 +8,7 @@ In general, it is recommended to clone this repository to your Google Drive for 
 
 Firstly, you need to download [the train and test datasets](https://dhbwstg-my.sharepoint.com/:f:/g/personal/inf20111_lehre_dhbw-stuttgart_de/EkzpxgUaZn9FhQzTylc5D-8B0XFuU4BwawXWmELFV0OezA?e=uR1XDG) and place them in the `data/train` and `data/test` directories.
 
-To train the model, there are two methods:
+There are two methods to train the model:
 
 1. Run the following commands:
 
