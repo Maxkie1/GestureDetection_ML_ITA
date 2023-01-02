@@ -130,7 +130,7 @@ with mp_hands.Hands(
             frame = cv2.flip(frame, 1)
             print("we after frame")
             
-            cv2.putText(frame, "predicted gesture "+str(pred_gest) + str(round(confidence, 2))+"%", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            cv2.putText(frame, "predicted gesture "+str(pred_gest) +" "+ str(round(confidence*100, 1))+"%", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2
             
             #cv2.imshow("Frame",frame)
