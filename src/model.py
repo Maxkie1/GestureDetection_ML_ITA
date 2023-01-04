@@ -87,6 +87,10 @@ def prepare_data(training_path, test_path):
     y_train = y_train[indices]
     print('Training data shuffled.')
 
+    # slice to y_train and y_train to 50000 samples
+    x_train = x_train[:50000]
+    y_train = y_train[:50000] 
+
     # One-hot encode the labels
     y_train = tf.keras.utils.to_categorical(y_train, num_classes=10)
     y_test = tf.keras.utils.to_categorical(y_test, num_classes=10)
