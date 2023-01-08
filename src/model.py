@@ -222,3 +222,5 @@ def predict_gesture(model, hand_landmarks):
     confidence = prediction[0][predicted_gesture]
     # Print the gesture and confidence
     print("Predicted gesture: {}, confidence: {}".format(predicted_gesture, confidence))
+
+    return predicted_gesture, confidence
