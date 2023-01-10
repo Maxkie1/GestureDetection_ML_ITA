@@ -303,7 +303,7 @@ def train_and_evaluate_custom_model(x_train, y_train, x_test, y_test, param_dist
     # Print the model summary, best hyperparameters, train, validation and test accuracy
     model.summary()
     print("Train accuracy:", history.history["accuracy"][-1])
-    print("Validation accuracy:", history.history["val_accuracy"][-1])
+    #print("Validation accuracy:", history.history["val_accuracy"][-1])
     print("Test accuracy:", test_accuracy)
     print("Classification report:", classification_report(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1)))
     
