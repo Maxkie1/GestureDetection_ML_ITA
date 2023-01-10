@@ -88,8 +88,8 @@ def prepare_data(training_path, test_path):
     print('Training data shuffled.')
 
     # slice to y_train and y_train to 50000 samples
-    x_train = x_train[:50000]
-    y_train = y_train[:50000] 
+    x_train = x_train[:40000]
+    y_train = y_train[:40000] 
 
     # One-hot encode the labels
     y_train = tf.keras.utils.to_categorical(y_train, num_classes=10)
@@ -129,21 +129,21 @@ def create_model(hidden_layers, neurons_layer1, neurons_layer2, neurons_layer3, 
     model.add(tf.keras.layers.Input(shape=(63,)))
     if hidden_layers == 1 or hidden_layers == 2 or hidden_layers == 3:
         model.add(tf.keras.layers.Dense(neurons_layer1))
-        model.add(tf.keras.layers.Activation('relu'))
+        model.add(tf.keras.layers.Activation('tanh'))
         if batch_normalization == True:
             model.add(tf.keras.layers.BatchNormalization())
         if dropout == True:
             model.add(tf.keras.layers.Dropout(0.2))
         if hidden_layers == 2 or hidden_layers == 3:
             model.add(tf.keras.layers.Dense(neurons_layer2))
-            model.add(tf.keras.layers.Activation('relu'))
+            model.add(tf.keras.layers.Activation('tanh'))
             if batch_normalization == True:
                 model.add(tf.keras.layers.BatchNormalization())
             if dropout == True:
                 model.add(tf.keras.layers.Dropout(0.2))
             if hidden_layers == 3:
                 model.add(tf.keras.layers.Dense(neurons_layer3))
-                model.add(tf.keras.layers.Activation('relu'))
+                model.add(tf.keras.layers.Activation('tanh'))
                 if batch_normalization == True:
                     model.add(tf.keras.layers.BatchNormalization())
                 if dropout == True:

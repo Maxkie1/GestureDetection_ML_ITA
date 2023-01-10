@@ -72,10 +72,8 @@ with mp_hands.Hands(
                         mp_drawing_styles.get_default_hand_connections_style())
 
                     # Predict the gesture performed by the hand
-                    #model.predict_gesture(gesture_recognition_model, hand_landmarks)
                     predict_gest, confidence = predict_gesture(gesture_recognition_model, hand_landmarks)
                     print(predict_gest, confidence)
-                    #predict_gest_str = "Predicted gesture " + str(predict_gest)
                     return predict_gest, confidence
 
         def draw_landmarks():
@@ -100,52 +98,31 @@ with mp_hands.Hands(
         ret, frame = cap.read()
 
         try:
-            print(('../emojis/{}.png').format(pred_gest))
+            # Search the path of the Logo 
             logo = cv2.imread(('../emojis/{}.png').format(pred_gest))
             
-         # Convert the image to RGBA color space
-
-            #logo = cv2.cvtColor(logo, cv2.COLOR_BGR2RGBA)
-            # Set the white pixels to transparent
-            #_, alpha = cv2.threshold(logo[:,:,3], 0, 255, cv2.THRESH_BINARY)
-            #logo[:,:,3] = alpha
-
-            # Resize the image to a small size
+            # Resize the logo and position it
             logo = cv2.resize(logo, (100, 100))
-
-            #frame  cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-
             frame_height, frame_width = frame.shape[:2]
-            #frame[0:100, frame_width-100:frame_width] = logo
             start_x = int(frame_width * 0.50)
             start_y = int(frame_height * 0.05)
-            frame[start_y:start_y+100, start_x:start_x+100] = logo
 
-            print("we here")
+            # Insert Emoji into camera feed
+            frame[start_y:start_y+100, start_x:start_x+100] = logo
             
-            #rows, cols, _ = frame.shape
-            
-            #rame = cv2.addWeighted(logo, 0.7, frame, 1.0, 0)
+            # Draw the landmarks
             draw_landmarks()
             frame = cv2.flip(frame, 1)
             print("we after frame")
             
             cv2.putText(frame, "predicted gesture "+str(pred_gest) +" "+ str(round(confidence*100, 1))+"%", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2
-            
-            #cv2.imshow("Frame",frame)
-            
+                        
         except Exception as G:
-            print("ERROR PICTURE", G)
-            print("no gesture")
             frame = cv2.flip(frame, 1)
             cv2.putText(frame, "No gesture detected", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2
         cv2.imshow('MediaPipe Hands', frame)
-        
-        
-        #font.putText(image, "🤔 🎉 💻", (100, 100), font.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
         
         # Check for user input to exit the program
         if cv2.waitKey(5) & 0xFF == 27:
