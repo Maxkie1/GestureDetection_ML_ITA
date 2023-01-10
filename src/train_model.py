@@ -38,4 +38,17 @@ param_distributions = dict(
 x_train, y_train, x_test, y_test = model.prepare_data(training_h5_path, test_h5_path)
 
 # Train and evaluate the model
-model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=40, cv=3, n_jobs=-1, verbose=1)
+#model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=40, cv=3, n_jobs=-1, verbose=1)
+
+# Train and evaluate the final model based on the best hyperparameters
+best_distributions = dict(
+    batch_size=256,
+    epochs=80,
+    hidden_layers=2,
+    neurons_layer1=64,
+    neurons_layer2=128,
+    neurons_layer3=64,
+    batch_normalization=True,
+    dropout=True
+)  
+model.train_and_evaluate_custom_model(x_train, y_train, x_test, y_test, best_distributions)
