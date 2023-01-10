@@ -1,6 +1,7 @@
 # GestureDetection_ML_ITA
 
-This project uses a neural network to recognize gestures from hands in a live video feed. The recognized gestures are displayed as emojis in the video feed.
+This project uses a neural network to recognize gestures from hands in a live video feed. The recognized gestures are displayed as emojis in the video feed.  
+The detailed documentation can be found in [README.pdf](README.pdf).
 
 ## Usage
 
