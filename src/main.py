@@ -10,7 +10,6 @@ import os
 import cv2
 import model
 import mediapipe as mp
-import numpy as np
 
 from model import predict_gesture
 
@@ -136,4 +135,3 @@ def get_emojis():
         print(emoji)
         emojis.append(cv2.imread(emojis_folder+str(emoji)+'.png', -1))
     return emojis
-    

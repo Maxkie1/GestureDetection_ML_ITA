@@ -42,6 +42,7 @@ The project requires the following libraries:
 - `matplotlib`
 - `numpy`
 - `h5py`
+- `scikit-learn`
 - `scikeras`
 - `scikit-optimize`
 - `pandas`
