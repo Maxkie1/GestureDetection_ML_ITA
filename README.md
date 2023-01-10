@@ -1,6 +1,6 @@
 # GestureDetection_ML_ITA
 
-This project uses a neural network to recognize gestures from hands in a live video feed. The recognized gestures are used to play a simple game.
+This project uses a neural network to recognize gestures from hands in a live video feed. The recognized gestures are displayed as emojis in the video feed.
 
 ## Usage
 
@@ -30,7 +30,7 @@ cd src
 python main.py
 ```
 
-The video stream from the default webcam will be displayed, and the gestures performed by the detected hands will be used to control the game.
+The video stream from the default webcam will be displayed and the gestures performed by the detected hands will be shown as emojis.
 
 ## Requirements
 

@@ -1,4 +1,7 @@
 # Ignore everything in this directory
 *
-# Except this file
+# Except
 !.gitignore
+!*_main.png
+!*_main.md
+!results_example.md
