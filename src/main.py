@@ -85,9 +85,6 @@ with mp_hands.Hands(
                             mp_drawing_styles.get_default_hand_landmarks_style(),
                             mp_drawing_styles.get_default_hand_connections_style())
 
-
-        
-
         # Flip the image horizontally for a selfie-view display
         try:
             pred_gest, confidence = handmarks()
@@ -132,7 +129,6 @@ with mp_hands.Hands(
 cap.release()
 cv2.destroyAllWindows()
 
-
 def get_emojis():
     emojis_folder = './emojis'
     emojis = []
@@ -140,3 +136,4 @@ def get_emojis():
         print(emoji)
         emojis.append(cv2.imread(emojis_folder+str(emoji)+'.png', -1))
     return emojis
+    
