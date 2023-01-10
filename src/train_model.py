@@ -38,4 +38,4 @@ param_distributions = dict(
 x_train, y_train, x_test, y_test = model.prepare_data(training_h5_path, test_h5_path)
 
 # Train and evaluate the model
-model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=20, cv=3, n_jobs=-1, verbose=1)
+model.train_and_evaluate_model(x_train, y_train, x_test, y_test, param_distributions, n_iter=40, cv=3, n_jobs=-1, verbose=1)
