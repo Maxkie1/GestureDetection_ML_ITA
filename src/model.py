@@ -192,21 +192,21 @@ def create_model(hidden_layers, neurons_layer1, neurons_layer2, neurons_layer3, 
     model.add(tf.keras.layers.Input(shape=(63,)))
     if hidden_layers == 1 or hidden_layers == 2 or hidden_layers == 3:
         model.add(tf.keras.layers.Dense(neurons_layer1))
-        model.add(tf.keras.layers.Activation('relu'))
+        model.add(tf.keras.layers.Activation('tanh'))
         if batch_normalization == True:
             model.add(tf.keras.layers.BatchNormalization())
         if dropout == True:
             model.add(tf.keras.layers.Dropout(0.2))
         if hidden_layers == 2 or hidden_layers == 3:
             model.add(tf.keras.layers.Dense(neurons_layer2))
-            model.add(tf.keras.layers.Activation('relu'))
+            model.add(tf.keras.layers.Activation('tanh'))
             if batch_normalization == True:
                 model.add(tf.keras.layers.BatchNormalization())
             if dropout == True:
                 model.add(tf.keras.layers.Dropout(0.2))
             if hidden_layers == 3:
                 model.add(tf.keras.layers.Dense(neurons_layer3))
-                model.add(tf.keras.layers.Activation('relu'))
+                model.add(tf.keras.layers.Activation('tanh'))
                 if batch_normalization == True:
                     model.add(tf.keras.layers.BatchNormalization())
                 if dropout == True:
@@ -337,3 +337,5 @@ def predict_gesture(model, hand_landmarks):
     confidence = prediction[0][predicted_gesture]
     # Print the gesture and confidence
     print("Predicted gesture: {}, confidence: {}".format(predicted_gesture, confidence))
+
+    return predicted_gesture, confidence
